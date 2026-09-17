@@ -1,28 +1,21 @@
-import type { Metadata } from 'next'
-import { RenacerNav } from '@/components/renacer/RenacerNav'
-import { RenacerHero } from '@/components/renacer/RenacerHero'
-import { RenacerBeneficios } from '@/components/renacer/RenacerBeneficios'
-import { RenacerSueros } from '@/components/renacer/RenacerSueros'
-import { RenacerProceso } from '@/components/renacer/RenacerProceso'
-import { RenacerCTA } from '@/components/renacer/RenacerCTA'
-import { RenacerFooter } from '@/components/renacer/RenacerFooter'
-
-export const metadata: Metadata = {
-  title: 'Renacer por Dentro · Jornada de Sueroterapia | Zanatte',
-  description:
-    'Un reset para tu cuerpo, tu energía y tu manera de sentirte contigo mismo. Jornada especial de sueroterapia Zanatte en Bogotá. Cupos limitados.',
-}
+'use client'
+import { useEffect } from 'react'
+import { RENACER_CSS, RENACER_BODY } from './renacer-content'
 
 export default function RenacerPorDentroPage() {
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible') }),
+      { threshold: 0.1 }
+    )
+    document.querySelectorAll('.fade-in').forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
+
   return (
     <>
-      <RenacerNav />
-      <RenacerHero />
-      <RenacerBeneficios />
-      <RenacerSueros />
-      <RenacerProceso />
-      <RenacerCTA />
-      <RenacerFooter />
+      <style dangerouslySetInnerHTML={{ __html: RENACER_CSS }} />
+      <div dangerouslySetInnerHTML={{ __html: RENACER_BODY }} />
     </>
   )
 }
