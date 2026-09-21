@@ -1,6 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 import { RENACER_CSS, RENACER_BODY } from './renacer-content'
+import BookingForm from './BookingForm'
 
 export default function RenacerPorDentroPage() {
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function RenacerPorDentroPage() {
     <>
       <style dangerouslySetInnerHTML={{ __html: RENACER_CSS }} />
       <div dangerouslySetInnerHTML={{ __html: RENACER_BODY }} />
+      <BookingForm />
     </>
   )
 }
