@@ -64,6 +64,28 @@ export const RENACER_CSS = `
   .suero-name { font-family: var(--font-serif); font-size: 24px; font-weight: 400; color: var(--bark); margin-bottom: 12px; }
   .suero-desc { font-size: 14px; line-height: 1.8; color: var(--earth); font-weight: 300; margin-bottom: 14px; }
   .suero-tag { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--stone); }
+  .sueros-note { text-align: center; max-width: 640px; margin: 50px auto 0; font-size: 14px; color: var(--earth); line-height: 1.8; padding-top: 40px; border-top: 1px solid rgba(181,164,138,0.3); font-weight: 300; }
+  .sueros-note strong { color: var(--bark); font-weight: 500; }
+
+  .paquetes { background: var(--cream); }
+  .paquetes-inner { max-width: 1100px; margin: 0 auto; }
+  .paquetes-header { text-align: center; margin-bottom: 60px; }
+  .paquetes-note { font-size: 14px; color: var(--earth); line-height: 1.8; max-width: 560px; margin: 0 auto; font-weight: 300; }
+  .paquetes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .paquete-card { background: var(--cream-deep); padding: 36px 28px; transition: background 0.3s; }
+  .paquete-card:hover { background: #fff; }
+  .paquete-name { font-family: var(--font-serif); font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 10px; }
+  .paquete-desc { font-size: 13px; line-height: 1.7; color: var(--earth); font-weight: 300; margin-bottom: 16px; }
+  .paquete-price { font-size: 16px; color: var(--green); font-weight: 500; }
+
+  .practico { background: var(--cream-deep); }
+  .practico-inner { max-width: 1080px; margin: 0 auto; }
+  .practico-header { text-align: center; margin-bottom: 60px; }
+  .practico-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+  .practico-block-title { font-family: var(--font-serif); font-size: 21px; font-weight: 400; color: var(--green); margin-bottom: 18px; }
+  .practico-list { display: flex; flex-direction: column; gap: 12px; }
+  .practico-item { font-size: 14px; color: var(--bark); line-height: 1.6; font-weight: 300; padding-left: 16px; position: relative; }
+  .practico-item::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
 
   .proceso { background: var(--cream); }
   .proceso-inner { max-width: 760px; margin: 0 auto; }
@@ -106,6 +128,8 @@ export const RENACER_CSS = `
     .beneficios-grid { grid-template-columns: 1fr 1fr; }
     .sueros-grid { grid-template-columns: 1fr; }
     .suero-card.wide { grid-column: span 1; }
+    .paquetes-grid { grid-template-columns: 1fr; }
+    .practico-grid { grid-template-columns: 1fr; gap: 36px; }
     .why-grid { grid-template-columns: 1fr; }
     footer { flex-direction: column; text-align: center; }
     .cta-section { padding: 90px 24px; }
@@ -117,13 +141,13 @@ export const RENACER_BODY = `
   <a href="/" class="nav-logo">Ż<span class="dot">anatte</span></a>
   <div class="nav-right">
     <a href="/" class="nav-back">← Zanatte</a>
-    <a href="https://wa.me/573023333830?text=Hola%2C%20quiero%20reservar%20mi%20cupo%20para%20Renacer%20por%20Dentro%20%28Sueroterapia%20Zanatte%29." class="nav-cta" target="_blank">Reservar</a>
+    <a href="#" class="nav-cta" onclick="window.dispatchEvent(new CustomEvent('abrir-reserva')); return false;">Reservar</a>
   </div>
 </nav>
 
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-eyebrow">Bogotá · Jornada especial de sueroterapia</span>
+    <span class="hero-eyebrow">Ibagué · 10 y 11 de octubre · Jornada especial de sueroterapia</span>
     <svg class="iv-icon" viewBox="0 0 84 118" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="42" y1="2" x2="42" y2="16" stroke="#B5A48A" stroke-width="2"/>
       <path d="M19 16 H65 a6 6 0 0 1 6 6 V64 a29 29 0 0 1 -58 0 V22 a6 6 0 0 1 6 -6 Z" stroke="#7A6A52" stroke-width="2"/>
@@ -135,7 +159,7 @@ export const RENACER_BODY = `
     <div class="hero-rule"></div>
     <p class="hero-sub">No es solo un suero. Es un espacio para que tu cuerpo, tu energía y tu manera de sentirte contigo mismo vuelvan a empezar.</p>
     <div class="hero-btns">
-      <a href="https://wa.me/573023333830?text=Hola%2C%20quiero%20reservar%20mi%20cupo%20para%20Renacer%20por%20Dentro%20%28Sueroterapia%20Zanatte%29." class="btn-primary" target="_blank">Reservar mi cupo</a>
+      <a href="#" class="btn-primary" onclick="window.dispatchEvent(new CustomEvent('abrir-reserva')); return false;">Reservar mi cupo</a>
       <a href="#sueros" class="btn-outline">Ver los sueros</a>
     </div>
     <span class="hero-fine">Cupos limitados · Respuesta inmediata por WhatsApp</span>
@@ -174,37 +198,121 @@ export const RENACER_BODY = `
     <div class="sueros-header fade-in">
       <span class="section-label">Nuestros sueros</span>
       <h2 class="section-title">Elige el que <em>tu cuerpo</em><br>te está pidiendo.</h2>
+      <p class="hero-sub">5 sueros base, $120.000 cada uno.</p>
     </div>
     <div class="sueros-grid">
       <div class="suero-card fade-in">
-        <svg class="suero-icon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="9" fill="none" stroke="#7A6A52" stroke-width="2"/><g stroke="#C8A030" stroke-width="2"><line x1="24" y1="2" x2="24" y2="10"/><line x1="24" y1="38" x2="24" y2="46"/><line x1="2" y1="24" x2="10" y2="24"/><line x1="38" y1="24" x2="46" y2="24"/><line x1="8" y1="8" x2="14" y2="14"/><line x1="34" y1="34" x2="40" y2="40"/><line x1="8" y1="40" x2="14" y2="34"/><line x1="34" y1="14" x2="40" y2="8"/></g></svg>
-        <div class="suero-name">Revitalizante</div>
-        <p class="suero-desc">Vitaminas y antioxidantes que devuelven la energía del día a día.</p>
-        <span class="suero-tag">Cansancio acumulado</span>
+        <svg class="suero-icon" viewBox="0 0 48 48"><path d="M24 4 L40 10 V22 C40 32 33 40 24 44 C15 40 8 32 8 22 V10 Z" fill="none" stroke="#7A6A52" stroke-width="2"/><path d="M24 18 C20 22 20 27 24 31 C28 27 28 22 24 18Z" fill="#2E7D32" opacity="0.7"/></svg>
+        <div class="suero-name">Vitamina C</div>
+        <p class="suero-desc">Refuerza el sistema inmune, potente antioxidante y favorece la producción de colágeno.</p>
+        <span class="suero-tag">Inmunológico</span>
       </div>
       <div class="suero-card fade-in">
-        <svg class="suero-icon" viewBox="0 0 48 48"><path d="M24 4 L40 10 V22 C40 32 33 40 24 44 C15 40 8 32 8 22 V10 Z" fill="none" stroke="#7A6A52" stroke-width="2"/><path d="M24 18 C20 22 20 27 24 31 C28 27 28 22 24 18Z" fill="#2E7D32" opacity="0.7"/></svg>
-        <div class="suero-name">Inmunológico</div>
-        <p class="suero-desc">Fortalece tus defensas frente a los males de temporada.</p>
-        <span class="suero-tag">Prevención</span>
+        <svg class="suero-icon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="9" fill="none" stroke="#7A6A52" stroke-width="2"/><g stroke="#C8A030" stroke-width="2"><line x1="24" y1="2" x2="24" y2="10"/><line x1="24" y1="38" x2="24" y2="46"/><line x1="2" y1="24" x2="10" y2="24"/><line x1="38" y1="24" x2="46" y2="24"/><line x1="8" y1="8" x2="14" y2="14"/><line x1="34" y1="34" x2="40" y2="40"/><line x1="8" y1="40" x2="14" y2="34"/><line x1="34" y1="14" x2="40" y2="8"/></g></svg>
+        <div class="suero-name">Complejo B</div>
+        <p class="suero-desc">Energía y vitalidad: apoya el metabolismo y el sistema nervioso.</p>
+        <span class="suero-tag">Revitalizante</span>
       </div>
       <div class="suero-card fade-in">
         <svg class="suero-icon" viewBox="0 0 48 48"><path d="M24 24 m0 -14 a14 14 0 1 1 -9.9 23.9 a9 9 0 1 1 6.4 -15.3 a5 5 0 1 1 3.5 8.5" fill="none" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/></svg>
-        <div class="suero-name">Detox</div>
-        <p class="suero-desc">Elimina toxinas, mejora la digestión y purifica el organismo.</p>
-        <span class="suero-tag">Limpieza interna</span>
-      </div>
-      <div class="suero-card fade-in">
-        <svg class="suero-icon" viewBox="0 0 48 48"><path d="M20 8 C12 20 7 27 7 32 a14 14 0 0 0 28 0 c0 -5 -5 -12 -13 -24Z" fill="#E8D5A8" opacity="0.6" stroke="#7A6A52" stroke-width="2"/><path d="M36 8 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" fill="#C8A030"/></svg>
-        <div class="suero-name">Antiaging</div>
-        <p class="suero-desc">Retrasa el envejecimiento celular y mejora la luminosidad de la piel.</p>
-        <span class="suero-tag">Piel y vitalidad</span>
+        <div class="suero-name">Azul de Metileno</div>
+        <p class="suero-desc">Antioxidante potente con apoyo cognitivo y mitocondrial, ayuda a la desintoxicación celular.</p>
+        <span class="suero-tag">Detox</span>
       </div>
       <div class="suero-card fade-in">
         <svg class="suero-icon" viewBox="0 0 48 48"><path d="M24 40 C10 30 6 22 10 15 a9 9 0 0 1 14 -2 a9 9 0 0 1 14 2 c4 7 0 15 -14 25Z" fill="none" stroke="#7A6A52" stroke-width="2"/></svg>
-        <div class="suero-name">Recuperación</div>
-        <p class="suero-desc">Repone minerales, rehidrata y reduce la inflamación post-esfuerzo.</p>
-        <span class="suero-tag">Después del ejercicio</span>
+        <div class="suero-name">Hierro</div>
+        <p class="suero-desc">Combate el cansancio y la anemia, mejora el transporte de oxígeno en el cuerpo.</p>
+        <span class="suero-tag">Recuperación</span>
+      </div>
+      <div class="suero-card fade-in">
+        <svg class="suero-icon" viewBox="0 0 48 48"><path d="M20 8 C12 20 7 27 7 32 a14 14 0 0 0 28 0 c0 -5 -5 -12 -13 -24Z" fill="#E8D5A8" opacity="0.6" stroke="#7A6A52" stroke-width="2"/><path d="M36 8 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" fill="#C8A030"/></svg>
+        <div class="suero-name">Ácido Hialurónico</div>
+        <p class="suero-desc">Hidratación profunda de la piel, elasticidad y efecto antiaging.</p>
+        <span class="suero-tag">Antiaging</span>
+      </div>
+    </div>
+    <p class="sueros-note fade-in"><strong>¿Quieres potenciar tu suero?</strong> El día de tu cita puedes sumar cualquiera de más de 20 suplementos adicionales (+$20.000 c/u) según lo que tu cuerpo necesite — te los mostramos en el sitio para que elijas con calma.</p>
+  </div>
+</section>
+
+<section class="paquetes" id="paquetes">
+  <div class="paquetes-inner">
+    <div class="paquetes-header fade-in">
+      <span class="section-label">Paquetes de la tarde</span>
+      <h2 class="section-title">Tratamientos más completos,<br><em>en la tarde de tu evento.</em></h2>
+      <p class="paquetes-note">Se agendan para la tarde del sábado 10 o domingo 11 (duran de 1 a 2 horas según el procedimiento). Al reservar tu paquete, te contactamos por WhatsApp para confirmar el horario exacto.</p>
+    </div>
+    <div class="paquetes-grid">
+      <div class="paquete-card fade-in">
+        <div class="paquete-name">Limpieza facial</div>
+        <p class="paquete-desc">Limpieza facial profunda profesional.</p>
+        <span class="paquete-price">$120.000</span>
+      </div>
+      <div class="paquete-card fade-in">
+        <div class="paquete-name">Plasma</div>
+        <p class="paquete-desc">Plasma rico en plaquetas para regeneración y rejuvenecimiento.</p>
+        <span class="paquete-price">$180.000</span>
+      </div>
+      <div class="paquete-card fade-in">
+        <div class="paquete-name">Plasma capilar</div>
+        <p class="paquete-desc">Plasma rico en plaquetas aplicado al cuero cabelludo, estimula el crecimiento capilar.</p>
+        <span class="paquete-price">$150.000</span>
+      </div>
+      <div class="paquete-card fade-in">
+        <div class="paquete-name">Limpieza facial + Dermapen</div>
+        <p class="paquete-desc">Combo de limpieza facial profunda más microneedling con dermapen.</p>
+        <span class="paquete-price">$180.000</span>
+      </div>
+      <div class="paquete-card fade-in">
+        <div class="paquete-name">Plasma + Sueroterapia</div>
+        <p class="paquete-desc">Combo de plasma rico en plaquetas más una sesión de sueroterapia.</p>
+        <span class="paquete-price">$280.000</span>
+      </div>
+      <div class="paquete-card fade-in">
+        <div class="paquete-name">Biotina + Alta frecuencia</div>
+        <p class="paquete-desc">Combo de biotina capilar más tratamiento de alta frecuencia.</p>
+        <span class="paquete-price">$180.000</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="practico">
+  <div class="practico-inner">
+    <div class="practico-header fade-in">
+      <span class="section-label">Antes de reservar</span>
+      <h2 class="section-title">Lo que necesitas <em>saber</em>.</h2>
+    </div>
+    <div class="practico-grid">
+      <div class="practico-block fade-in">
+        <div class="practico-block-title">Fechas y horario</div>
+        <div class="practico-list">
+          <div class="practico-item">Sábado 10 y domingo 11 de octubre</div>
+          <div class="practico-item">Sueroterapia: mañanas de 7:00am a 12:00pm, con horario fijo por bloques de 1 hora</div>
+          <div class="practico-item">Paquetes: tardes de ambos días, coordinados por WhatsApp</div>
+          <div class="practico-item">Plaza Central, Ibagué (dirección exacta por confirmar)</div>
+        </div>
+      </div>
+      <div class="practico-block fade-in">
+        <div class="practico-block-title">Requisitos previos</div>
+        <div class="practico-list">
+          <div class="practico-item">Evita azúcar, carnes rojas y alcohol los 3 días previos</div>
+          <div class="practico-item">Mantente bien hidratado los días antes de tu cita</div>
+          <div class="practico-item">Evita el exceso de cafeína el día de la sesión</div>
+          <div class="practico-item">Usa ropa cómoda que permita descubrir el brazo con facilidad</div>
+          <div class="practico-item">Cuéntanos si tienes alguna alergia, embarazo o condición médica al llegar</div>
+        </div>
+      </div>
+      <div class="practico-block fade-in">
+        <div class="practico-block-title">Reservas y cancelación</div>
+        <div class="practico-list">
+          <div class="practico-item">Apartas tu cupo con el 50% o el 100% del valor</div>
+          <div class="practico-item">Pagando el 100% por adelantado recibes un bono sorpresa</div>
+          <div class="practico-item">Cancelas con 3+ días de anticipación: te devolvemos lo abonado</div>
+          <div class="practico-item">Cancelas con menos de 3 días: se pierde el 50% del valor de la sesión</div>
+          <div class="practico-item">El resto del valor y los adicionales se pagan el día del evento</div>
+        </div>
       </div>
     </div>
   </div>
@@ -252,7 +360,7 @@ export const RENACER_BODY = `
     <span class="cta-label">Cupos limitados</span>
     <h2 class="cta-title">Tu cuerpo ya te está<br><em>pidiendo este espacio.</em></h2>
     <p class="cta-sub">Escríbenos por WhatsApp y te confirmamos tu cupo para Renacer por Dentro, la jornada de sueroterapia de Zanatte.</p>
-    <a href="https://wa.me/573023333830?text=Hola%2C%20quiero%20reservar%20mi%20cupo%20para%20Renacer%20por%20Dentro%20%28Sueroterapia%20Zanatte%29." class="btn-wa" target="_blank">
+    <a href="#" class="btn-wa" onclick="window.dispatchEvent(new CustomEvent('abrir-reserva')); return false;">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Reservar mi cupo
     </a>
