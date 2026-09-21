@@ -27,7 +27,7 @@ interface EventoWompi {
 // el SHA256 resultante contra el checksum que envio Wompi.
 export function verificarEventoWompi(evento: EventoWompi): boolean {
   const valores = evento.signature.properties.map((prop) => {
-    const partes = prop.split('.').slice(1) // quita el prefijo "transaction."
+    const partes = prop.split('.') // ej. "transaction.id" -> data.transaction.id
     let valor: unknown = evento.data
     for (const parte of partes) valor = (valor as Record<string, unknown>)?.[parte]
     return String(valor)
