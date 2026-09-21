@@ -134,7 +134,7 @@ export default function AdminView({ reservas }: { reservas: ReservaAdmin[] }) {
                   <div style={{ color: '#888' }}>{r.modalidad === 'manana_sueroterapia' ? 'Sueroterapia' : 'Paquete tarde'}</div>
                 </td>
                 <td style={{ padding: '8px 10px' }}>
-                  {new Date(r.fecha_evento).toLocaleDateString('es-CO', { day: '2-digit', month: 'short' })}
+                  {new Date(r.fecha_evento).toLocaleDateString('es-CO', { day: '2-digit', month: 'short', timeZone: 'UTC' })}
                   {r.hora_inicio && ` · ${r.hora_inicio.slice(0, 5)}`}
                 </td>
                 <td style={{ padding: '8px 10px' }}>
