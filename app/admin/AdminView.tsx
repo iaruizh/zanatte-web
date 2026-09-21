@@ -38,6 +38,25 @@ function formatFechaHora(iso: string) {
   return new Date(iso).toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' })
 }
 
+// Normaliza a formato wa.me: solo digitos, con indicativo de Colombia (57) si no lo trae.
+function normalizarWhatsApp(numero: string) {
+  const digitos = numero.replace(/\D/g, '')
+  if (digitos.startsWith('57') && digitos.length >= 12) return digitos
+  return `57${digitos}`
+}
+
+function linkRecordatorio(r: ReservaAdmin) {
+  const fecha = new Date(r.fecha_evento).toLocaleDateString('es-CO', { day: 'numeric', month: 'long', timeZone: 'UTC' })
+  const cuando =
+    r.modalidad === 'manana_sueroterapia' && r.hora_inicio
+      ? `el ${fecha} a las ${r.hora_inicio.slice(0, 5)}`
+      : `el ${fecha} en la tarde (pronto te confirmamos la hora exacta)`
+  const mensaje =
+    `Hola ${r.nombre_cliente}! Te recordamos tu cita de ${r.servicio_nombre} en Renacer por Dentro (Zanatte), ${cuando}. ` +
+    `Recuerda evitar azúcar, carnes rojas y alcohol los 3 días previos. Te esperamos en Plaza Central, Ibagué. Cualquier duda, escríbenos por aquí.`
+  return `https://wa.me/${normalizarWhatsApp(r.whatsapp_cliente)}?text=${encodeURIComponent(mensaje)}`
+}
+
 export default function AdminView({ reservas }: { reservas: ReservaAdmin[] }) {
   const [filtro, setFiltro] = useState<string>('todas')
 
@@ -116,6 +135,7 @@ export default function AdminView({ reservas }: { reservas: ReservaAdmin[] }) {
               <th style={{ padding: '8px 10px' }}>Abono</th>
               <th style={{ padding: '8px 10px' }}>Estado</th>
               <th style={{ padding: '8px 10px' }}>Creada</th>
+              <th style={{ padding: '8px 10px' }}></th>
             </tr>
           </thead>
           <tbody>
@@ -144,6 +164,18 @@ export default function AdminView({ reservas }: { reservas: ReservaAdmin[] }) {
                   <span style={{ color: ESTADO_COLOR[r.estado_reserva] ?? '#333', fontWeight: 500 }}>{r.estado_reserva.replace(/_/g, ' ')}</span>
                 </td>
                 <td style={{ padding: '8px 10px', color: '#888' }}>{formatFechaHora(r.created_at)}</td>
+                <td style={{ padding: '8px 10px' }}>
+                  {(r.estado_reserva === 'confirmada' || r.estado_reserva === 'pendiente_agendar') && (
+                    <a
+                      href={linkRecordatorio(r)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: '#25D366', fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap' }}
+                    >
+                      📲 Recordatorio
+                    </a>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
